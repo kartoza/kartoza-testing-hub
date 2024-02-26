@@ -1,0 +1,40 @@
+name: pr-test
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install playwright dependencies and Run Tests
+        working-directory: src
+        run: |
+          for dir in $(find . -type d -name '*_test'); do
+            if [ -f "$dir/package.json" ]; then
+              echo "Running tests in $dir"
+              cd $dir
+              npm install
+              npm ci
+              npx playwright install --with-deps
+              npx playwright test
+            fi
+          done
+
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: src/playwright-report/
+          retention-days: 30
