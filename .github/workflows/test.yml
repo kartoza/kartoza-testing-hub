@@ -34,9 +34,11 @@ jobs:
               npx playwright install --with-deps
               npx playwright test
 
+              path="$(basename "$(pwd)")"
+
               echo "Copy artifact from $dir"
-              zip $dir-playwright-report $dir/playwright-report
-              cp $dir-playwright-report.zip ../playwright-reports/
+              zip $path-playwright-report $path/playwright-report/
+              cp $path-playwright-report.zip ../playwright-reports/
             fi
           done
 
