@@ -24,7 +24,7 @@ jobs:
       - name: Install playwright dependencies and Run Tests
         working-directory: src
         run: |
-          for dir in $(find . -type d -name '*_test'); do
+          for dir in $(find "$(pwd)" -type d -name '*_test'); do
             if [ -f "$dir/package.json" ]; then
               echo "Running tests in $dir"
               cd $dir
@@ -35,7 +35,7 @@ jobs:
               npx playwright test
 
               # Set artifact path for each directory
-              ARTIFACT_PATH="src/$dir/playwright-report/"
+              ARTIFACT_PATH="$dir/playwright-report/"
               echo "ARTIFACT_PATH=src/$dir/playwright-report/" >> $GITHUB_ENV
               # Upload artifact for each directory
               
