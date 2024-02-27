@@ -33,6 +33,13 @@ jobs:
               npm ci
               npx playwright install --with-deps
               npx playwright test
+
+              # Set artifact path for each directory
+              ARTIFACT_PATH="src/$dir/playwright-report/"
+              # Upload artifact for each directory
+              
+              echo "Uploading artifact for $dir"
+              echo "##vso[task.uploadfile]$ARTIFACT_PATH;artifactname=$dir"
             fi
           done
 
@@ -40,5 +47,5 @@ jobs:
         if: always()
         with:
           name: playwright-report
-          path: src/kartoza_test/playwright-report
+          path: ${{ ARTIFACT_PATH }}
           retention-days: 30
