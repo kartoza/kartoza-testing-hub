@@ -24,7 +24,7 @@ jobs:
       - name: Install playwright dependencies and Run Tests
         working-directory: src
         run: |
-          for dir in $(find . -type d -name '*_test'); do
+          for dir in $(find "$(pwd)" -type d -name '*_test'); do
             if [ -f "$dir/package.json" ]; then
               echo "Running tests in $dir"
               cd $dir
@@ -33,6 +33,11 @@ jobs:
               npm ci
               npx playwright install --with-deps
               npx playwright test
+
+              path="$(basename "$(pwd)")"
+              echo "Copy artifact from $dir"
+              zip -r $path-playwright-report playwright-report
+              cp $path-playwright-report.zip ../playwright-reports/
             fi
           done
 
@@ -40,5 +45,5 @@ jobs:
         if: always()
         with:
           name: playwright-report
-          path: src/kartoza_test/playwright-report
+          path: src/playwright-reports
           retention-days: 30
