@@ -37,7 +37,7 @@ jobs:
               path="$(basename "$(pwd)")"
 
               echo "Copy artifact from $dir"
-              zip $path-playwright-report $path/playwright-report/
+              zip $path-playwright-report $path/playwright-report
               cp $path-playwright-report.zip ../playwright-reports/
             fi
           done
