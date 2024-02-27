@@ -36,7 +36,7 @@ jobs:
 
               # Set artifact path for each directory
               ARTIFACT_PATH="$dir/playwright-report/"
-              echo "ARTIFACT_PATH=src/$dir/playwright-report/" >> $GITHUB_ENV
+              echo "ARTIFACT_PATH=$dir/playwright-report/" >> $GITHUB_ENV
               # Upload artifact for each directory
               
               echo "Uploading artifact for $dir"
