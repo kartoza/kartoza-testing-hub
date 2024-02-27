@@ -34,13 +34,9 @@ jobs:
               npx playwright install --with-deps
               npx playwright test
 
-              # Set artifact path for each directory
-              ARTIFACT_PATH="$dir/playwright-report/"
-              echo "ARTIFACT_PATH=$dir/playwright-report/" >> $GITHUB_ENV
-              # Upload artifact for each directory
-              
-              echo "Uploading artifact for $dir"
-              echo "##vso[task.uploadfile]$ARTIFACT_PATH;artifactname=$dir"
+              echo "Copy artifact from $dir"
+              zip $dir-playwright-report $dir/playwright-report
+              cp $dir-playwright-report.zip ../playwright-reports/
             fi
           done
 
@@ -48,5 +44,5 @@ jobs:
         if: always()
         with:
           name: playwright-report
-          path: ${{ env.ARTIFACT_PATH }}
+          path: src/playwright-reports/
           retention-days: 30
