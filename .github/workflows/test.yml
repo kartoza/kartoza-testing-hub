@@ -49,7 +49,7 @@ jobs:
           done
 
       - name: Organise playwright reports
-        continue-on-error: true
+        if: always()
         working-directory: src
         run: |
           for dir in $(find "$(pwd)" -type d -name '*_test'); do
