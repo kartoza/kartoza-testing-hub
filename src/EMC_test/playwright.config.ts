@@ -43,6 +43,7 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         baseURL: 'https://testing.emc.kartoza.com/',
+        trace: 'on-first-retry',
       },
       retries: 2,
     },
@@ -52,6 +53,7 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         baseURL: 'https://catalogue-staging.sasdi.gov.za/',
+        trace: 'on-first-retry',
       },
       retries: 2,
     },
@@ -61,8 +63,9 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         baseURL: 'https://catalogue.sasdi.gov.za/',
+        trace: 'on-first-retry',
       },
-      retries: 0,
+      retries: 1,
     },
     //{
       //name: 'chromium',
