@@ -21,23 +21,35 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install playwright dependencies and Run Tests
+      - name: Install playwright dependencies
+        working-directory: src
+        run: |
+          for dir in $(find "$(pwd)" -type d -name '*_test'); do
+            if [ -f "$dir/package.json" ]; then
+              echo "Installing playwright in $dir"
+              cd $dir
+
+              # set up playwright
+              npm install
+              npm ci
+              npx playwright install --with-deps
+
+            fi
+          done
+
+      - name: Run playwright tests
         working-directory: src
         run: |
           for dir in $(find "$(pwd)" -type d -name '*_test'); do
             if [ -f "$dir/package.json" ]; then
               echo "Running tests in $dir"
               cd $dir
-              # set up playwright
-              npm install
-              npm ci
-              npx playwright install --with-deps
               npx playwright test
-
             fi
           done
 
       - name: Organise playwright reports
+        continue-on-error: true
         working-directory: src
         run: |
           for dir in $(find "$(pwd)" -type d -name '*_test'); do
