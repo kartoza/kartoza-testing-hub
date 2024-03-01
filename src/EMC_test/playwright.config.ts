@@ -38,7 +38,7 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     //{ name: 'setup', testMatch: /.*\.setup\.ts/ },
-    {
+    /*{
       name: 'testing',
       use: {
         ...devices['Desktop Chrome'],
@@ -56,7 +56,7 @@ export default defineConfig({
         trace: 'on-first-retry',
       },
       retries: 2,
-    },
+    },*/
   
     {
       name: 'production',
